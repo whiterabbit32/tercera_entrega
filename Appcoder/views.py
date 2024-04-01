@@ -25,12 +25,7 @@ def alta_curso (request):
     else:
          return render(request, 'cursos.html')
 
-def ver_curso (request):
-    cursos= Curso.objects.all()
-    dicc = {"cursos": cursos}
-    plantilla= loader.get_template ('cursos.html')
-    documento= plantilla.render (dicc)
-    return HttpResponse (documento)
+
 
 
 
@@ -73,15 +68,7 @@ def profesor (request):
 
 
 def ver_buscar_publicaciones (request):
-    #if request.method == 'POST':
-     #   form= PublicacionesForm (request.POST)
-      #  if form.is_valid:
-       #     datos= form.cleaned_data ['materia']
-        #    busq_publicaciones= Publicaciones.objects.filter (materia__icontains="Materia")
-         #   titulo= busq_publicaciones["titulo"]
-          #  return render(request, 'resultado_busqueda.html', {'publicaciones': titulo})
-    #else:
-     #   form = PublicacionesForm()
+    
     return render(request, 'busqueda_publicacion.html')
 
 def buscar_publicaciones (request):
@@ -110,8 +97,4 @@ def nuevas_publicaciones (request):
 
     
 
-    #return render(
-             #   request,
-              #  "register.html",
-               # {"error": ["Ocurrió un error al registrar el usuario."]},
-           # )
+ 
