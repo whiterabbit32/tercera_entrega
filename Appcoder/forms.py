@@ -8,14 +8,14 @@ class EstudianteForm(forms.Form):
     dni= forms.CharField (max_length= 10)
         
 
-class CursoForm(forms.ModelForm):
+class CursoForm(forms.Form):
     nombre= forms.CharField (max_length= 35)
-    camada= forms.IntegerField ()
+    promocion= forms.IntegerField ()
     
         
         
 
-class ProfesorForm(forms.ModelForm):
+class ProfesorForm(forms.Form):
     nombre= forms.CharField (max_length= 35)
     apellido= forms.CharField (max_length= 35)
     email= forms.CharField (max_length= 35)

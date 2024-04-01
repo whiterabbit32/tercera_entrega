@@ -4,9 +4,16 @@
 
 {% block contenido%}
 
-<form action="profesores" method="POST">
+{%for m in mensaje%}
+<div class="alert alert-success" role="alert">
+    <strong>{{m}}</strong>
+  </div>
+{% endfor %}
+<form action="profesor" method="POST">
   {% csrf_token %}
-  <div class="mb-3">
+  <div class="container">
+    <div class="row">
+    <div class="col-md-6">
     <label for="nombre" class="form-label">Nombre</label>
     <input type="text" class="form-control" id="nombre" name="nombre" aria-describedby="emailHelp">
   </div>
@@ -15,15 +22,17 @@
     <input type="text" class="form-control" id="apellido" name="apellido" aria-describedby="emailHelp">
   </div>
   <div class="mb-3">
-    <label for="email" class="form-label">email</label>
-    <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp">
-  </div>
+    <label for="email" class="form-label">Especialidad</label>
+    <input type="text" class="form-control" id="dni" name="especialidad" aria-describedby="emailHelp">
   <div class="mb-3">
-    <label for="especialidad" class="form-label">Especialidad</label>
-    <input type="text" class="form-control" id="especialidad" name="especialidad" aria-describedby="emailHelp">
+    <label for="email" class="form-label">Email</label>
+    <input type="email" class="form-control" id="dni" name="email" aria-describedby="emailHelp">
   </div>
- 
-  <button type="submit" class="btn btn-primary">Registrarse</button>
+</div>
+</div>
+  
+  
+  <button type="submit" class="btn btn-primary">Registrar</button>
 </form>
 
   

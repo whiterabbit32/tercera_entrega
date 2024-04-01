@@ -10,11 +10,20 @@ from django.template import loader
 def inicio (request):
     return render (request , "padre.html")
 
-def alta_curso (request, nombre):
-    curso = Curso (nombre=nombre, camada=23)
-    curso.save ()
-    texto= f"se guardo correctamente el curso {curso.nombre} {curso.camada}"
-    return HttpResponse (texto)
+def alta_curso (request):
+    if request.method == 'POST':
+        form = CursoForm (request.POST)
+        if form.is_valid():
+            datos= form.cleaned_data
+            nuevo_curso= Curso ( nombre= datos["nombre"], promocion= datos["promocion"])
+            nuevo_curso.save()
+            respuesta= loader.get_template ("cursos.html")
+            mensaje= "El curso ha sido agregado con exito a la base de datos"
+            diccionario= {"mensaje": [mensaje]}
+            documento= respuesta.render (diccionario)
+            return HttpResponse (documento)
+    else:
+         return render(request, 'cursos.html')
 
 def ver_curso (request):
     cursos= Curso.objects.all()
@@ -36,21 +45,28 @@ def registrar_estudiante(request):
             datos= form.cleaned_data
             nuevo_estudiante= Estudiante( nombre= datos["nombre"], apellido= datos["apellido"], email= datos["email"], dni= datos ["dni"])
             nuevo_estudiante.save()
-            mensaje= "usuario registrado"
-            return HttpResponse (mensaje)
+            respuesta= loader.get_template ("registro.html")
+            mensaje= "Bienvenido, ha sido registrado como alumno exitosamente"
+            diccionario= {"mensaje": [mensaje]}
+            documento= respuesta.render (diccionario)
+            return HttpResponse (documento)
     else:
-         return render(request, 'registro_estudiante.html', {'form': form})
+         return render(request, 'registro_estudiante.html')
 
 
-def profesores (request):
+def profesor (request):
      if request.method == 'POST':
         form = ProfesorForm (request.POST)
         if form.is_valid():
             datos= form.cleaned_data
             nuevo_Profe= Profesor( nombre= datos["nombre"], apellido= datos["apellido"], email= datos["email"], especialidad= datos ["especialidad"])
             nuevo_Profe.save()
-            mensaje =f" Bienvenido profesor, ha sido registrado con éxito"
-            return HttpResponse (mensaje)
+            respuesta= loader.get_template ("profesores.html")
+            mensaje= "Bienvenido profesor, ha sido registrado con éxito"
+            diccionario= {"mensaje": [mensaje]}
+            documento= respuesta.render (diccionario)
+            
+            return HttpResponse (documento)
      else:
          return render(request, 'profesores.html')
     
@@ -71,9 +87,7 @@ def ver_buscar_publicaciones (request):
 def buscar_publicaciones (request):
     if request.GET ["materia"]:
         materia= request.GET ["materia"]
-        print (materia)
         resultados= Publicaciones.objects.filter (materia__icontains= materia)
-        print (resultados)
         return render (request, "resultado_busqueda.html", {"publicaciones": resultados} )
 
 def registro (request):
@@ -83,7 +97,6 @@ def nuevas_publicaciones (request):
      if request.method == 'POST':
         form = PublicacionesForm (request.POST)
         if form.is_valid():
-            print ("llega")
             datos= form.cleaned_data
             nueva_publicacion= Publicaciones( titulo= datos["titulo"], autor= datos["autor"], materia= datos["materia"])
             nueva_publicacion.save()
